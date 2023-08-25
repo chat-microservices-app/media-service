@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 // to communicate with auth-service and check if the token passed is valid
-@FeignClient(name = "${security-service.name}")
+@FeignClient(name = "${security-service.name}", url = "${security-service.url}")
 public interface SecurityServiceClient {
     String BASE_URL = RestProperties.ROOT + "/v1" + RestProperties.AUTH.ROOT;
 

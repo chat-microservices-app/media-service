@@ -15,12 +15,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
-@EnableMethodSecurity(securedEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 @EnableWebSecurity
 @EnableGlobalAuthentication
 @Configuration
@@ -62,10 +61,10 @@ public class WebSecurityConfig {
                         amr ->
                                 amr.requestMatchers(HttpMethod.OPTIONS).permitAll() // option methods are permitted by default
                                         .requestMatchers(allowedGetEndpoints()).permitAll() // get methods are permitted by default
-                                        .anyRequest().permitAll()
+                                        .anyRequest().authenticated() // all other requests are authenticated
 
                 )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class); // regiseQr the jwt filter before the username password filter
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class); // register the jwt filter before the username password filter
         return http.build();
     }
 

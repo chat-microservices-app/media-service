@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "${user-management.name}")
+@FeignClient(name = "${user-management-service.name}", url = "${user-management-service.url}")
 public interface UserManagementClient {
 
     String BASE_URL = RestProperties.ROOT + "/v1" + RestProperties.USER.ROOT;
